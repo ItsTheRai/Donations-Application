@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        #{activityAccountBean.activityId=param['activityId']}
+        </h:head>
+    <h:body>
+        Below is a list of all donations for this activity
+                   
+        <h:dataTable value="#{activityAccountBean.activityDonationList}" var="c"
+    			styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row">
+            <h:column>
+                <f:facet name="header">
+                    Name
+                </f:facet>
+                #{c.fundraiser.firstName}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">
+                    Surname
+                </f:facet>
+                #{c.fundraiser.lastName}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">
+                    Amount donated
+                </f:facet>
+                #{c.donationAmount}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Donation date
+                </f:facet>
+                #{c.donationAmount}
+            </h:column>
+        </h:dataTable>
+        <br/>
+        <h:link value="back to home" outcome="index"/>
+        <h:form>
+            Logout: <h:commandButton value="Logout" action="#{loginBean.logout()}"/>
+        </h:form>
+    </h:body>
+</html>

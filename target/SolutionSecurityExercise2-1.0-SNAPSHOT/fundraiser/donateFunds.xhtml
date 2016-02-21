@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        
+        
+        <script type="text/javascript">
+            
+
+    function validateRegex(input) {
+        
+        //if(!input.match(/^[0-9]\d*(((,\d{3+}){1})?(\.\d{0,2})?)$/)){
+            //alert("good");
+        //return false;
+        if(input.match(/^[0-9]\d*$/)){
+            alert("good");
+            return true;
+        }
+        if(input.match(/^[0-9]\d*.$/)){
+            alert("good");
+            return true;
+        }
+        if(input.match(/^[0-9]\d*.\d{0,2}$/)){
+            alert("good");
+            return true;
+        }
+        //else if(input.match(/^[0-9]*.[0-9]*$/)){
+        //    alert("good");
+        //    return true;
+        //}
+        //else if(/^[0-9]*$/){
+        //        alert("good");
+        //    return true;
+        //    }
+        else{
+            
+            alert("bad ss")
+            return false;
+        }
+    }
+    
+    function addComas(string){
+        return string.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    }
+
+</script>
+        
+    </h:head>
+    <h:body>
+        #{donationRegistrationBean.userName=request.remoteUser}
+        
+        
+        <h:form id="form">
+            <f:passThroughAttribute name ="onpaste" value="return false"/>
+            Pick a cause and a donation amount
+            <br/>
+            
+            <h:inputText onkeypress="if(validateRegex(document.getElementById('form:donationAmount').value+ 
+                        String.fromCharCode(event.which))){
+                    
+                    return true;
+                }
+                
+                else return false;
+                ;" 
+                        
+                        id ="donationAmount" value="#{donationRegistrationBean.donationAmount}" 
+                             title="donationAmont" label="DonationAmount" required="true" 
+                             requiredMessage="enter a valid amount"/>
+            
+            <h:selectOneMenu id="activityId" value="#{donationRegistrationBean.selectedStatus}"
+                             converter="omnifaces.SelectItemsConverter"
+                             label="pick an activity to support"
+                             required="true" requiredMessage="pick a cause">
+                <f:selectItem itemLabel="Choose an activity to support" noSelectionOption="false" />
+                <f:selectItems id ="des" value="#{donationRegistrationBean.statusList}"
+                               var="_activity" itemValue="#{_activity}"
+                               itemLabel="#{_activity.description}"             
+                              />
+            </h:selectOneMenu>
+            
+            <h:outputLabel for="donationAmount" value="Donation amount:"/>
+            <br/>
+            <h:message style="color:red" for="donationAmount"/>
+            
+            <br/>
+            <!--//this is where w etry to make a donation, if it suceeds a new donation object is created that stores all the data-->
+            <h:commandButton id="register" type="submit" value="Donate funds" action="#{donationRegistrationBean.registerDonation()}" 
+                             title="Register Fundraiser"/>
+            <h:commandButton id="reset" type="reset" value="Reset Form" title="Reset Form"/>
+            <h:commandButton id="anonymous" type="submit" value="Anonymous donation" title="Donate anonymously"
+                             action="#{donationRegistrationBean.registerAnonymousDonation()}"/>
+        </h:form>
+        <br/>
+        <h:link value="back to home" outcome="index"/>
+        <h:form>
+            Logout: <h:commandButton value="Logout" action="#{loginBean.logout()}"/>
+        </h:form>
+    </h:body>
+</html>

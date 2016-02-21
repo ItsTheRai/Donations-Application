@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <script type="text/javascript">
+        #{causeRegistrationBean.userName=request.remoteUser}
+        </script>
+    </h:head> 
+    <h:body>
+        #{causeRegistrationBean.userName}
+        <br/>
+        #{causeRegistrationBean.causeCharity}
+        <br/>
+    <h:outputLabel value="THIS IS A PAGE THAT charities CAN ACCESS"/>
+        <br/>   
+    <h:link value="Back to index" outcome="index"/>
+    <br/>
+        
+    <h:form>
+            Fill in the details and press the register button.
+            <br/>
+            
+            
+            <h:outputLabel for="causeName" value="Enter a cause name:"/>
+            <br/>
+            <h:inputTextarea id ="causeName" value="#{causeRegistrationBean.causeName}" 
+                             title="causeName" label="causeName" required="true" requiredMessage="enter a cause name"/>
+            <h:message style="color:red" for="description"/>
+            <br/>
+            <h:outputLabel for="description" value="*Description:"/>
+            <br/>
+            <h:inputTextarea id ="description" value="#{causeRegistrationBean.causeDescription}" 
+                             rows="20" title="description" label="description" required='true' requiredMessage="enter a description"/>
+            &nbsp;
+            <h:message style="color:red" for="description"/>
+            <br/>
+            
+            <h:commandButton id="register" type="submit" value="Register cause" action="#{causeRegistrationBean.registerCause()}" title="Register activity"/>
+            <h:commandButton id="reset" type="reset" value="Reset Form" title="Reset Form"/>
+        </h:form>
+    <br/>
+    <h:link value="back to home" outcome="index"/>
+        <h:form>
+            Logout: <h:commandButton value="Logout" action="#{loginBean.logout()}"/>
+        </h:form>
+    </h:body>
+</html>

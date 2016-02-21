@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        
+        <script>
+            #{activityRegistrationBean.userName=request.remoteUser}
+        </script>
+    </h:head>
+    <body>
+    <h:outputLabel value="welcome #{activityRegistrationBean.userName}"/>
+    <br/>
+    <h:form>
+            
+            Fill in the details and press the register button.
+            <br/>
+            
+            <h:outputLabel for="activityName" value="Activity name:"/>
+            <h:inputText id ="causeName" value="#{activityRegistrationBean.activityName}" title="Enter an activity name" required="true" requiredMessage="Mandatory Field"/>
+            &nbsp; 
+            <h:message style="color:red" for="activityName"/>
+            <br/>
+            
+            <h:outputLabel for="description" value="*Description:"/>
+            <br/>
+            <h:inputTextarea validatorMessage="The description is too long, must be less than 1000 characters" id ="description" value="#{activityRegistrationBean.description}" 
+                             rows="20" title="description" label="description">
+                <f:validateLength maximum="1000"/>
+                
+            </h:inputTextarea>
+            &nbsp;
+            <h:message style="color:red" for="description"/>
+            <br/>
+            <h:outputLabel for="activityDate" value="Enter the date of this activity in DD-MM-YYYY:"/>
+            <h:inputText id ="activityDate" value="#{activityRegistrationBean.activityDateString}" title="Enter an activity name" required="true" requiredMessage="Mandatory Field"/>
+            &nbsp;
+            <h:message style="color:red" for="activityDate"/>
+            <br/>
+            
+            <h:outputLabel for="cause" value="*Select cause:"/>      
+            <h:selectOneMenu id="charityId" value="#{activityRegistrationBean.selectedStatus}"
+                             converter="omnifaces.SelectItemsConverter"
+                             label="pick a charitable couse to support"
+                             required="true" requiredMessage="pick a cause">
+                <f:selectItem itemLabel="Choose a charitable cause to support" noSelectionOption="true" />
+                <f:selectItems id ="des" value="#{activityRegistrationBean.statusList}"
+                               var="_cause" itemValue="#{_cause}"
+                               itemLabel="#{_cause.causeName}"             
+                              />
+            </h:selectOneMenu>
+            <br/>
+            
+            <h:commandButton id="register" type="submit" value="Register cause" action="#{activityRegistrationBean.registerActivity()}" title="Register activity"/>
+            <h:commandButton id="reset" type="reset" value="Reset Form" title="Reset Form"/>
+        </h:form>
+    <br/>
+    <h:link value="back to home" outcome="index"/>
+        <h:form>
+            Logout: <h:commandButton value="Logout" action="#{loginBean.logout()}"/>
+        </h:form>
+    </body>
+</html>

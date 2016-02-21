@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>User Registration</title>
+    </h:head>
+    <h:body>
+        
+        <h:form>
+            Fill in the details and press the register button.
+            <br/>
+            <h:outputLabel for="username" value="*User name:"/>
+            
+            <h:inputText id ="username" value="#{registrationBean.username}" title="Enter user name" required="true" requiredMessage="Mandatory Field"/>
+            &nbsp; 
+            <h:message style="color:red" for="username"/>
+            <br/>
+            <h:outputLabel for="userPassword" value="*Password:"/>
+            <h:inputSecret id ="userPassword" value="#{registrationBean.userpassword}" title="Enter password" label="password" required="true" requiredMessage="Mandatory Field"/>
+            &nbsp; 
+            <h:message style="color:red" for="userPassword"/>
+            <br/>
+            <h:outputLabel for="name" value="*First Name: "/>
+            <h:inputText id ="name" value="#{registrationBean.fundraiserName}" title="Enter name" required="true" label="name" requiredMessage="Mandatory Field"/>
+            &nbsp; 
+            <h:message style="color:red" for="name"/>
+            <br/>
+            <h:outputLabel for="surname" value="*Last Name"/>
+            <h:inputText id ="surname" value="#{registrationBean.fundraiserSurname}" title="Enter surname" label="surname" required="true"  requiredMessage="Mandatory Field"/>
+            &nbsp; 
+            <h:message style="color:red" for="surname"/>
+            <br/>
+            <h:outputLabel for="middle name" value="Middle name"/>
+            <h:inputText id ="middleName" value="#{registrationBean.fundraiserMiddleName}" title="enter middle name" label="middleName" required="false"/>
+            &nbsp; 
+            <h:message style="color:red" for="middle name"/>
+            <br/>
+            
+            <h:outputLabel for="description" value="*Descrpbe yourself:"/>
+            <br/>
+            <h:inputTextarea validatorMessage="The description is too long, must be less than 1000 characters" 
+                             id ="description" value="#{registrationBean.fundraiserDescription}" 
+                             rows="20" title="description" label="description">
+                <f:validateLength maximum="1000"/>
+                
+            </h:inputTextarea>
+            <br/>
+            &nbsp;
+            <h:message style="color:red" for="description"/>
+            
+            <h:commandButton id="register" type="submit" value="Register" 
+                             action="#{registrationBean.registerFundraiser()}" title="Register Fundraiser"/>
+            
+            <h:commandButton id="reset" type="reset" value="Reset Form" title="Reset Form"/>
+        </h:form>
+        <h:messages globalOnly="true" />
+        <br/>
+        <h:link value="back to home" outcome="index"/>
+        <h:form>
+            Logout: <h:commandButton value="Logout" action="#{loginBean.logout()}"/>
+        </h:form>
+    </h:body>
+</html>
